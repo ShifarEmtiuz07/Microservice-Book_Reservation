@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  reservations:
+    build:
+      context: .
+      dockerfile: ./apps/reservations/Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+    command: pnpm start:dev
+    env_file:
+      - .env
+
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      volumes:
+        - .:/usr/src/app
+        - /usr/src/app/node_modules
+      ports:
+        - '3001:3001'
+      command: pnpm run start:dev auth
+      env_file:
+        - .env
+  mongo:
+    image: mongo

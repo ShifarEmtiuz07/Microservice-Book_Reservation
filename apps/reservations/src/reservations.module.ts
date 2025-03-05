@@ -7,7 +7,8 @@ import { ReservationDocument, ReservationSchema } from './models/reservation.sch
 
 
 @Module({
-  imports:[DatabaseModule,
+  imports:[
+    DatabaseModule,
     DatabaseModule.forFeature([{name:ReservationDocument.name, schema:ReservationSchema},
 
     ]),
