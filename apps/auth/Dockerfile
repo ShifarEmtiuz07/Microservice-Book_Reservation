@@ -9,4 +9,5 @@ RUN pnpm install
 
 COPY . .
 
-CMD ["pnpm", "start:dev"]
+# CMD ["pnpm", "start:dev"]
+CMD ["node", "dist/apps/auth/main"]

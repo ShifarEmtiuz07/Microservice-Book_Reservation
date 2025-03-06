@@ -14,19 +14,21 @@ services:
       - mongo
     command: pnpm start:dev
     env_file:
-      - .env
+      - ./apps/reservations/.env
 
   auth:
     build:
       context: .
       dockerfile: ./apps/auth/Dockerfile
-      volumes:
-        - .:/usr/src/app
-        - /usr/src/app/node_modules
-      ports:
-        - '3001:3001'
-      command: pnpm run start:dev auth
-      env_file:
-        - .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3001:3001'
+    depends_on:
+      - mongo
+    command: pnpm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
   mongo:
     image: mongo
