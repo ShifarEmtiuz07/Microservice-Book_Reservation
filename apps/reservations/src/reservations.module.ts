@@ -1,14 +1,14 @@
-import { Module } from '@nestjs/common';
-import { ReservationsService } from './reservations.service';
-import { ReservationsController } from './reservations.controller';
 import { DatabaseModule, LoggerModule } from '@app/common';
-import { ReservationsRepository } from './reservations.repository';
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
 import {
   ReservationDocument,
   ReservationSchema,
 } from './models/reservation.schema';
-import { ConfigModule } from '@nestjs/config';
-import * as Joi from 'joi';
+import { ReservationsController } from './reservations.controller';
+import { ReservationsRepository } from './reservations.repository';
+import { ReservationsService } from './reservations.service';
 
 @Module({
   imports: [
@@ -21,6 +21,7 @@ import * as Joi from 'joi';
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI:Joi.string().required() ,
+        PORT:Joi.number().required() ,
       }),
     }),
   ],

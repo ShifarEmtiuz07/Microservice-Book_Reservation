@@ -12,7 +12,7 @@ services:
       - '3000:3000'
     depends_on:
       - mongo
-    command: pnpm start:dev
+    command: pnpm start:dev reservations
     env_file:
       - ./apps/reservations/.env
 

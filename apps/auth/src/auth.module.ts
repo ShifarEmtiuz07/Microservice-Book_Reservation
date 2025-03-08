@@ -1,11 +1,11 @@
+import { LoggerModule } from '@app/common';
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import * as Joi from 'joi';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersModule } from './users/users.module';
-import { LoggerModule } from '@app/common';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as Joi from 'joi';
 
 @Module({
   imports: [
@@ -15,6 +15,10 @@ import * as Joi from 'joi';
           isGlobal: true,
           validationSchema: Joi.object({
             MONGODB_URI:Joi.string().required() ,
+            JWT_SECRET:Joi.string().required(),
+            JWT_EXPIRATION:Joi.string().required(),
+            PORT:Joi.number().required() ,
+
           }),
         }),
     JwtModule.registerAsync({
@@ -24,6 +28,7 @@ import * as Joi from 'joi';
           expiresIn: `${configService.get('JWT_EXPIRATION')}s`,
         },
       }),
+      inject:[ConfigService],
     }),
   ],
   controllers: [AuthController],
