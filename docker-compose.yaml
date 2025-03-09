@@ -14,7 +14,7 @@ services:
       - mongo
     command: pnpm start:dev
     env_file:
-      - ./apps/reservations/.env
+      - /apps/reservations/.env
 
   auth:
     build:
@@ -29,6 +29,6 @@ services:
       - mongo
     command: pnpm run start:dev auth
     env_file:
-      - ./apps/auth/.env
+      - /apps/auth/.env
   mongo:
     image: mongo
