@@ -6,9 +6,13 @@ import { ReservationsModule } from './reservations.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(ReservationsModule);
-  app.useGlobalPipes(new ValidationPipe( { whitelist:true}));
-  app.useLogger(app.get(Logger))
-  const configService=app.get(ConfigService)
-  await app.listen(configService.get<number>('PORT'));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useLogger(app.get(Logger));
+  const configService = app.get(ConfigService);
+  const port = configService.get<string>('PORT');
+  if (!port) {
+    throw new Error('PORT is not defined in the configuration');
+  }
+  await app.listen(port);
 }
 bootstrap();

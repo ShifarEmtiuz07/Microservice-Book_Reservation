@@ -11,16 +11,15 @@ import { UsersModule } from './users/users.module';
   imports: [
     UsersModule,
     LoggerModule,
-     ConfigModule.forRoot({
-          isGlobal: true,
-          validationSchema: Joi.object({
-            MONGODB_URI:Joi.string().required() ,
-            JWT_SECRET:Joi.string().required(),
-            JWT_EXPIRATION:Joi.string().required(),
-            PORT:Joi.number().required() ,
-
-          }),
-        }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        MONGODB_URI: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
+        JWT_EXPIRATION: Joi.string().required(),
+        PORT: Joi.number().required(),
+      }),
+    }),
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
@@ -28,7 +27,7 @@ import { UsersModule } from './users/users.module';
           expiresIn: `${configService.get('JWT_EXPIRATION')}s`,
         },
       }),
-      inject:[ConfigService],
+      inject: [ConfigService],
     }),
   ],
   controllers: [AuthController],
